@@ -1,0 +1,13 @@
+/* TAGS */
+
+h1 {font-family: Arial, Helvetica, sans-serif; font-size: 16pt; font-weight: bold; border-color: #2f5376; border-bottom-width: 3px; border-bottom-style: solid;}
+h2 {font-family: Arial, Helvetica, sans-serif; font-size: 14pt; font-weight: bold; border-color: #2f5376; border-bottom-width: 3px; border-bottom-style: solid;}
+h3 {font-family: Arial, Helvetica, sans-serif; font-size: 14pt; font-weight: bold;}
+
+p {margin-left: 3em; font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}
+li {margin-left: 3em; font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}
+table {margin-left: 3em; font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}
+
+/* CLASSES */
+.tm {font-family: Arial, Helvetica, sans-serif; font-size: xx-small; font-weight: normal; vertical-align:super;}
+.toc {margin-left: 3em; font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}

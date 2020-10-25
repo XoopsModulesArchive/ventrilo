@@ -1,0 +1,181 @@
+<?php
+// ------------------------------------------------------------------------- 
+//	AceWeb
+//		Copyright 2004, Andrew Johns & Micheal Wilkes
+// 		strathnet.cable.nu
+//	Template
+//		Copyright 2004 Thomas Hill
+//		<a href="http://www.worldware.com">worldware.com</a>
+// ------------------------------------------------------------------------- 
+// ------------------------------------------------------------------------- //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+require_once "../../mainfile.php";
+if ( file_exists(XOOPS_ROOT_PATH ."/modules/aceweb/language/".$xoopsConfig['language']."/templates.php") ) 
+    require_once XOOPS_ROOT_PATH ."/modules/aceweb/language/".$xoopsConfig['language']."/templates.php";
+else 
+	include_once XOOPS_ROOT_PATH ."/modules/aceweb/language/english/templates.php";
+// Include any common code for this module.
+require_once(XOOPS_ROOT_PATH ."/modules/aceweb/include/aceweb_includes.php");
+
+
+//
+// This takes the $msg and $data, and puts them into the template.
+// Templates used by this module have a space to display
+// error messages at the top of the page.
+//
+function aceweb_add_error($msg, $data)
+{
+	global $xoopsTpl;
+
+	$xerror = array();
+	$xerror['msg'] = $msg;
+	$xerror['data'] = $data;
+	$xoopsTpl->append('errors', $xerror);
+}
+
+
+//
+// Displays the "Main" tab of the module
+//
+function aceweb_main()
+{
+	global $xoopsTpl;
+	global $xoopsDB;
+	
+	$xoopsTpl->assign("lang", aceweb_get_intl());
+	$xoopsTpl->assign("page_title", _MI_ACEWEB_TITLE);
+
+	$config = aceweb_get_config();
+// section edited by Kheldar
+// These variables now live in the xoops_Ace config table
+	$aceserver = $config['config_main_count'];
+	$acedatabase = $config['config_main_where'];
+	$acewaitlist_tbl = $config['config_block_count'];
+	$aceuser = $config['config_block_where'];
+	$acepassword = $config['mssql_password'];
+
+// end variables section
+	//
+  if ($conn = mssql_connect( $aceserver , $aceuser , $acepassword))
+  {
+ //  echo "Connection made to ".$aceserver;
+    mssql_select_db($acedatabase, $conn);
+ //   echo "<br>".$acedatabase ." is selected.";
+  } else  {
+     echo "<br>Connection Failed";
+     echo "<br>ace server is :".$aceserver;
+     echo "<br>ace database is :".$acedatabase;
+     echo "<br>ace query is :".$acewaitlist_tbl;
+     echo "<br>ace user is :".$aceuser;
+     echo "<br>ace password is :".$acepassword;
+     phpinfo();
+  }
+  $query = "SELECT * FROM ".$acewaitlist_tbl;
+
+$result = mssql_query( $query );
+echo "<table border=1> <td nowrap>";
+echo "<tr><th> Priority </th><td><th> Care Level </th></td><td><th> Days Wait </th></td><td><th> LGA </th></td><td><th> Last Name</th></td><td><th> First Name </th></td><td><th> Suburb/Town </th></td><td><th> Comments </th></td></tr> ";
+for ($i = 0; $i < mssql_num_rows( $result ); ++$i)
+     {
+         $line = mssql_fetch_row($result);
+   echo "<tr><td>$line[11] </td><td> $line[12]</td><td> $line[5]</td><td> $line[9]</td><td> $line[1]</td><td> $line[0]</td><td> $line[14]</td><td> $line[6]</td></tr>";
+     }
+echo "</table>";
+  
+  
+  
+  
+// end of editing
+//	$main_where = $config['config_main_where'];
+//	$main_count = $config['config_main_count'];
+//
+//	$fields_displayed = array();
+//	foreach(aceweb_get_table_one_fields() as $k => $v)
+//		$fields_displayed[] = $v;
+//
+//	$queryString =
+//		'SELECT ' .
+//		aceweb_get_value($fields_displayed) .
+//		' FROM '.$xoopsDB->prefix('aceweb_table_one') .
+//		' ' . $main_where .
+//		' ORDER BY ' . $fields_displayed[0] .
+//		' ASC';
+//
+//	$result = $xoopsDB->query($queryString);
+//	if (!$result)
+//	{
+//		aceweb_add_error($xoopsDB->error(), $queryString);
+//		return;
+//	}
+//	$book = array();
+//	$rowIndex = 1;
+	
+//	while ($values = $xoopsDB->fetchArray($result))
+//	{
+//		if ($rowIndex++ > $main_count)
+//			break;
+//
+//		$xoopsTpl->append('rows', $values);
+//	}
+}
+
+//
+// Handles data posted from any form on the main page
+//
+function aceweb_main_post()
+{
+	global $xoopsTpl;
+	global $xoopsDB;
+	
+	$xoopsTpl->assign("lang", aceweb_get_intl());
+	$xoopsTpl->assign("page_title", _MI_ACEWEB_TITLE);
+}
+
+// Get all HTTP post or get parameters into global variables that are prefixed with "param_"
+import_request_variables("gp", "param_");
+
+// This page uses smarty templates. Set "$xoopsOption['template_main']" before including header
+$mytemplate = 'aceweb_index.html';
+$xoopsOption['template_main'] = "$mytemplate";
+
+include XOOPS_ROOT_PATH.'/header.php';
+$xoopsTpl->assign('page_title', _AM_ACEWEB_LABEL_MAIN_TITLE);
+
+
+if (!isset($param_op))
+	$param_op = "main";
+
+switch ($param_op) 
+{
+	case "main":
+		aceweb_main();
+		break;
+	case "main_post":
+		aceweb_main_post();
+		break;
+	default:
+		print "<h1>:Unknown method requested '$param_op' in index.php</h1>";
+		exit();
+}
+
+include XOOPS_ROOT_PATH."/footer.php";
+
+?>

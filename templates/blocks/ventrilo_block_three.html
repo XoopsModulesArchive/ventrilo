@@ -1,0 +1,12 @@
+<body onload="doLoad()">
+<p><b><{$block.lang.block_title1}></b></p>
+<p><b><{$block.serverstat}></b></p>
+<p><b><{$block.serverother}></b></p>
+<table border="3">
+
+	<{foreach item=link from=$block.links}>
+	<tr>
+		<td><img border="0" src="<{$link.url}>"" width="16" height="18"></td><td><{$link.name}></td><td><{$link.ping}></td>
+	</tr>
+	<{/foreach}>
+</table>

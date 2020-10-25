@@ -1,0 +1,40 @@
+<form action='<{$block.XOOPS_URL}>/modules/ventrilo/search_results.php' method='post' enctype="application/x-www-form-urlencoded" ID="Form1">
+	<table border='1' cellpadding='0' cellspacing='0' width='100%' ID="Table1">
+		<tr>
+			<td class='bg2'>
+				<table width='100%' border='0' cellpadding='4' cellspacing='1' ID="Table2">
+					<tr nowrap='nowrap'>
+						<td class='head'><{$block.lang.product_type}></td>
+						<td class='even'>
+							<select name='producttype' ID="Select1">
+								<{foreach item=link from=$block.modes  key=key }>
+								<option value='<{$key}>'><{$link}>
+								<{/foreach}>
+							</select></td>
+					</tr>
+					<tr nowrap='nowrap' valign = "center">
+						<td class='head' valign = "center"><{$block.lang.search_type}></td>
+						<td class='even' valign = "center" ><select name='searchmode' ID="Select2">
+								<{foreach item=link from=$block.searches  key=key }>
+								<option value='<{$key}>'><{$link}>
+								<{/foreach}>
+								</select></td>
+					</tr>
+					<tr nowrap='nowrap'>
+						<td class='head'><{$block.lang.search_for}></td>
+						<td class='even'>
+							<input type='text' name='query' size='14' value='' maxlength='255' ID="Text1">
+						</td>
+					</tr>
+					<tr>
+						<td class='head'>&nbsp;</td>
+						<td class='even'>
+							<input type='hidden' name='op' value='query' ID="Hidden1"> 
+							<input type='submit' value='<{$block.lang.search_submit}>' ID="Submit1" NAME="Submit1">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</form>

@@ -1,0 +1,65 @@
+Release Process.
+
+This file is a checklist of things to do before releasing a module
+
+-----------------------------------------------------------------------
+Source:
+-----------------------------------------------------------------------
+
+[	]	Check your bug database or list of bugs
+[	]	Search for and remove all debugging 'echo' statements
+
+-----------------------------------------------------------------------
+Documentation:
+-----------------------------------------------------------------------
+[	]	Update readme file
+[	]	Update documentation
+
+-----------------------------------------------------------------------
+Release:
+-----------------------------------------------------------------------
+[	]	Set version number in xoops_version.php
+[	]	Make release zip file.   Version: _____________________
+[	]	Uninstall, delete dir from xoops modules directory 
+		(If you don't do your development there!)
+
+-----------------------------------------------------------------------
+INSTALL
+-----------------------------------------------------------------------
+[	]	Verify module is uninstalled
+[	]	Verify Destination Directory is not there.
+[	]	Unzip release into correct dir
+[	]	Install using xoops admin. 
+[	]	No errors during install
+
+-----------------------------------------------------------------------
+TEST
+-----------------------------------------------------------------------
+[	]	Enable all blocks
+
+[	]	Check Main User Page Appearance
+[	]	Check Main Admin Page Appearance
+[	]	Check all blocks show up in xoops block admin
+
+	** Verify appearance of all admin pages
+[	]	Admin Main Menu page
+[	]	Admin configure page
+[	]	Admin All Other Pages
+
+	** Verify appearance of user view of module
+[	]	Main Page
+
+
+	** Verify appearance of blocks
+[	]	Block One.
+
+	** Check functionality
+[	]	Block One.
+
+	** Check Reloading the Module
+[	]	Module reloads without errors
+[	]	Module still works
+
+	** Check for Internationalization Problems
+[	]	Delete language directory
+[	]	Verify no english (or whatever language) left in the User Interface.
